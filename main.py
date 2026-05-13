@@ -1,17 +1,21 @@
-nome = input('Digite seu nome: ')
+nome = input('Digite o nome do aluno: ')
 materia = input('Digite a matéria: ')
 
-print(f'Olá, {nome}! Vamos calcular a média das suas notas e a frequência de {materia}.')
+print(f'Olá, {nome}! Vamos calcular a média e frequência de {materia}.')
 
 
-def ler_resposta(mensagem):
+def ler_aula(mensagem):
     while True:
-        resposta = input(mensagem).strip().lower()
+        try:
+            aula = int(input(mensagem))
 
-        if resposta in ['s', 'n']:
-            return resposta
-        else:
-            print('Resposta inválida. Digite apenas s ou n.')
+            if aula >= 0:
+                return aula
+            else:
+                print('Número de aulas inválido. Digite um valor positivo.')
+
+        except ValueError:
+            print('Entrada inválida. Digite apenas números inteiros.')
 
 
 def ler_nota(mensagem):
@@ -28,42 +32,38 @@ def ler_nota(mensagem):
             print('Entrada inválida. Digite apenas números.')
 
 
-aula1 = ler_resposta('Você assistiu à aula 1? (s/n): ')
-aula2 = ler_resposta('Você assistiu à aula 2? (s/n): ')
-aula3 = ler_resposta('Você assistiu à aula 3? (s/n): ')
+while True:
+    aulas_assistidas = ler_aula('Digite o número de aulas assistidas: ')
+    aulas_nao_assistidas = ler_aula('Digite o número de aulas não assistidas: ')
 
-nota1 = ler_nota('Digite a primeira nota: ')
-nota2 = ler_nota('Digite a segunda nota: ')
-nota3 = ler_nota('Digite a terceira nota: ')
+    total_aulas = aulas_assistidas + aulas_nao_assistidas
 
-media = (nota1 + nota2 + nota3) / 3
+    if total_aulas > 0:
+        break
+    else:
+        print('O total de aulas não pode ser zero. Digite novamente.')
 
-aulas_assistidas = 0
 
-if aula1 == 's':
-    aulas_assistidas += 1
+nota1 = ler_nota('Digite a nota do 1º bimestre: ')
+nota2 = ler_nota('Digite a nota do 2º bimestre: ')
+nota3 = ler_nota('Digite a nota do 3º bimestre: ')
+nota4 = ler_nota('Digite a nota do 4º bimestre: ')
 
-if aula2 == 's':
-    aulas_assistidas += 1
+frequencia = (aulas_assistidas / total_aulas) * 100
+media = (nota1 + nota2 + nota3 + nota4) / 4
 
-if aula3 == 's':
-    aulas_assistidas += 1
-
-frequencia = (aulas_assistidas / 3) * 100
-
-print('\n=== Resultado Final ===')
-print(f'Aluno: {nome}')
-print(f'Matéria: {materia}')
-print(f'Média: {media:.2f}')
-print(f'Frequência: {frequencia:.1f}%')
-
-if media >= 7 and frequencia >= 75:
+if media >= 7 and frequencia >= 70:
     situacao = 'Aprovado'
-elif media >= 5 and frequencia >= 65:
+elif media >= 5 and frequencia >= 50:
     situacao = 'Em recuperação'
 else:
     situacao = 'Reprovado'
 
+print('\n=== Resultado Final ===')
+print(f'Aluno: {nome}')
+print(f'Matéria: {materia}')
+print(f'Média: {media:.1f}')
+print(f'Frequência: {frequencia:.1f}%')
 print(f'Situação: {situacao}')
 
-print(f'\nBom, {nome}, sua média em {materia} é {media:.2f}, sua frequência é {frequencia:.1f}% e sua situação é: {situacao}.')
+print(f'\nBom, {nome}, sua média em {materia} é {media:.1f}, sua frequência é {frequencia:.1f}% e sua situação é: {situacao}.')
